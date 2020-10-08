@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    image: spring-boot-amq-app
+    container_name: spring-boot-amq-app
+    environment:
+      - SPRING_ACTIVEMQ_BROKER_URL=tcp://activemq:61616
+      - SPRING_PROFILES_ACTIVE=amqEnabled
+    ports:
+      - "8080:8080"
+    depends_on:
+      - activemq
+  activemq:
+    image: rmohr/activemq:5.15.9-alpine
+    container_name: activemq-rmohr
+    ports:
+      - "61616:61616"
+      - "8161:8161"
